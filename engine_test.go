@@ -26,10 +26,10 @@ func TestInitiateBoard(t *testing.T) {
 
 func TestCanMove(t *testing.T) {
 	e := new(Engine)
-	
+
 	///////////////////////////////////
 	// test sample
-	e.board = &Board {
+	e.board = &Board{
 		{2, 4, 2, 4},
 		{4, 2, 4, 2},
 		{2, 4, 2, 4},
@@ -42,7 +42,7 @@ func TestCanMove(t *testing.T) {
 
 	///////////////////////////////////
 	// test sample
-	e.board = &Board {
+	e.board = &Board{
 		{2, 4, 2, 4},
 		{4, 2, 4, 2},
 		{2, 0, 2, 4},
@@ -59,13 +59,13 @@ func TestDoMoveUp(t *testing.T) {
 
 	///////////////////////////////////
 	// test sample
-	e.board = &Board {
+	e.board = &Board{
 		{0, 2, 2, 2},
 		{0, 0, 2, 0},
 		{0, 0, 0, 2},
 		{0, 0, 0, 0},
 	}
-	targetBoard := &Board {
+	targetBoard := &Board{
 		{0, 2, 4, 4},
 		{0, 0, 0, 0},
 		{0, 0, 0, 0},
@@ -79,13 +79,13 @@ func TestDoMoveUp(t *testing.T) {
 
 	///////////////////////////////////
 	// test sample
-	e.board = &Board {
+	e.board = &Board{
 		{0, 2, 0, 0},
 		{0, 0, 2, 2},
 		{2, 0, 2, 2},
 		{0, 2, 0, 2},
 	}
-	targetBoard = &Board {
+	targetBoard = &Board{
 		{2, 4, 4, 4},
 		{0, 0, 0, 2},
 		{0, 0, 0, 0},
@@ -99,13 +99,13 @@ func TestDoMoveUp(t *testing.T) {
 
 	///////////////////////////////////
 	// test sample
-	e.board = &Board {
+	e.board = &Board{
 		{2, 0, 0, 4},
 		{2, 2, 4, 0},
 		{2, 2, 2, 2},
 		{2, 4, 2, 2},
 	}
-	targetBoard = &Board {
+	targetBoard = &Board{
 		{4, 4, 4, 4},
 		{4, 4, 4, 4},
 		{0, 0, 0, 0},
