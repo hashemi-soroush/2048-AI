@@ -7,23 +7,23 @@ type Player interface {
 	Play(Board) Move
 }
 
-type Engine struct {
+type Game struct {
 	board  Board
 	player Player
 	score int
 }
 
-func (e *Engine) InitiateBoard() {
-	e.board = *new(Board)
+func (g *Game) InitiateBoard() {
+	g.board = *new(Board)
 
 	rand.Seed(time.Now().UnixNano())
 
-	e.putRandomlyOnBoard(2)
-	e.putRandomlyOnBoard(2)
+	g.putRandomlyOnBoard(2)
+	g.putRandomlyOnBoard(2)
 }
 
-func (e *Engine) RunGame(p Player) {
-	e.player = p
+func (g *Game) RunGame(p Player) {
+	g.player = p
 
 	doMoveFuncs := map[Move]func(Board)(Board, int){
 		MoveUp:    doMoveUp,
@@ -38,32 +38,32 @@ func (e *Engine) RunGame(p Player) {
 		MoveLeft: canMoveLeft,
 	}
 
-	for canMove(e.board) {
-		copiedBoard := copyBoard(e.board)
-		nextMove := e.player.Play(copiedBoard)
+	for canMove(g.board) {
+		copiedBoard := copyBoard(g.board)
+		nextMove := g.player.Play(copiedBoard)
 		
-		if canMoveFuncs[nextMove](e.board) == false {
+		if canMoveFuncs[nextMove](g.board) == false {
 			continue
 		}
 
-		copiedBoard = copyBoard(e.board)
+		copiedBoard = copyBoard(g.board)
 		newBoard, score := doMoveFuncs[nextMove](copiedBoard)
-		e.board = newBoard
-		e.score += score
-		e.putRandomlyOnBoard([]int{2, 4}[rand.Intn(1)])
+		g.board = newBoard
+		g.score += score
+		g.putRandomlyOnBoard([]int{2, 4}[rand.Intn(1)])
 	}
 }
 
-func (e *Engine) putRandomlyOnBoard(number int) {
+func (g *Game) putRandomlyOnBoard(number int) {
 	type cell struct {
 		row int
 		col int
 	}
 
 	emptyCells := *new([]cell)
-	for i := 0; i < len(e.board); i++ {
-		for j := 0; j < len(e.board[i]); j++ {
-			if e.board[i][j] == 0 {
+	for i := 0; i < len(g.board); i++ {
+		for j := 0; j < len(g.board[i]); j++ {
+			if g.board[i][j] == 0 {
 				emptyCells = append(emptyCells, cell{i, j})
 			}
 		}
@@ -74,5 +74,5 @@ func (e *Engine) putRandomlyOnBoard(number int) {
 	}
 
 	selectedCell := emptyCells[rand.Intn(len(emptyCells))]
-	e.board[selectedCell.row][selectedCell.col] = number
+	g.board[selectedCell.row][selectedCell.col] = number
 }

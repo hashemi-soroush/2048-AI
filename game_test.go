@@ -5,18 +5,18 @@ import "testing"
 import "math/rand"
 
 func TestInitiateBoard(t *testing.T) {
-	e := new(Engine)
-	e.InitiateBoard()
+	g := new(Game)
+	g.InitiateBoard()
 
 	nonZeroCount := 0
-	for i := 0; i < len(e.board); i++ {
-		for j := 0; j < len(e.board[i]); j++ {
-			if e.board[i][j] != 0 {
+	for i := 0; i < len(g.board); i++ {
+		for j := 0; j < len(g.board[i]); j++ {
+			if g.board[i][j] != 0 {
 				nonZeroCount++
 			}
 
-			if !(e.board[i][j] == 0 || e.board[i][j] == 2) {
-				t.Errorf("Initiated board must only have 2s and 0s. board[%d][%d] is %d", i, j, e.board[i][j])
+			if !(g.board[i][j] == 0 || g.board[i][j] == 2) {
+				t.Errorf("Initiated board must only have 2s and 0s. board[%d][%d] is %d", i, j, g.board[i][j])
 			}
 		}
 	}
@@ -34,12 +34,12 @@ func (d *dummyPlayer) Play(board Board) Move {
 func TestRunGame(t *testing.T) {
 
 	for i:=0; i < 10; i++ {
-		e := new(Engine)
-		e.InitiateBoard()
-		fmt.Println(e.board)
-		e.RunGame(new(dummyPlayer))
-		fmt.Println(e.board)
-		fmt.Println(e.score)
+		g := new(Game)
+		g.InitiateBoard()
+		fmt.Println(g.board)
+		g.RunGame(new(dummyPlayer))
+		fmt.Println(g.board)
+		fmt.Println(g.score)
 		fmt.Println()
 	}
 }
