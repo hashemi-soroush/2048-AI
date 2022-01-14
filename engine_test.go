@@ -1,5 +1,6 @@
 package main
 
+import "fmt"
 import "reflect"
 import "testing"
 import "math/rand"
@@ -335,4 +336,22 @@ func TestDoMoveLeft(t *testing.T) {
 		t.Errorf("doMoveLeft is making a mistake")
 	}
 	///////////////////////////////////
+}
+
+type dummyPlayer struct{}
+func (d *dummyPlayer) Play(board Board) Move {
+	move := Move(rand.Intn(4))
+	return move
+}
+
+func TestRunGame(t *testing.T) {
+
+	for i:=0; i < 10; i++ {
+		e := new(Engine)
+		e.InitiateBoard()
+		fmt.Println(e.board)
+		e.RunGame(new(dummyPlayer))
+		fmt.Println(e.board)
+		fmt.Println()
+	}
 }
