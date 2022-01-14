@@ -352,6 +352,7 @@ func TestRunGame(t *testing.T) {
 		fmt.Println(e.board)
 		e.RunGame(new(dummyPlayer))
 		fmt.Println(e.board)
+		fmt.Println(e.score)
 		fmt.Println()
 	}
 }

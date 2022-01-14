@@ -20,6 +20,7 @@ type Player interface {
 type Engine struct {
 	board  *Board
 	player Player
+	score int
 }
 
 func (e *Engine) InitiateBoard() {
@@ -140,6 +141,7 @@ func (e *Engine) doMoveUp() {
 
 			if e.board[i][j] == e.board[cur][j] {
 				e.board[cur][j] *= 2
+				e.score += e.board[cur][j]
 				e.board[i][j] = 0
 				cur += 1
 				continue
@@ -170,6 +172,7 @@ func (e *Engine) doMoveDown() {
 
 			if e.board[i][j] == e.board[cur][j] {
 				e.board[cur][j] *= 2
+				e.score += e.board[cur][j]
 				e.board[i][j] = 0
 				cur -= 1
 				continue
@@ -200,6 +203,7 @@ func (e *Engine) doMoveRight() {
 
 			if e.board[i][j] == e.board[i][cur] {
 				e.board[i][cur] *= 2
+				e.score += e.board[i][cur]
 				e.board[i][j] = 0
 				cur -= 1
 				continue
@@ -230,6 +234,7 @@ func (e *Engine) doMoveLeft() {
 
 			if e.board[i][j] == e.board[i][cur] {
 				e.board[i][cur] *= 2
+				e.score += e.board[i][cur]
 				e.board[i][j] = 0
 				cur += 1
 				continue
