@@ -2,6 +2,7 @@ package main
 
 import "reflect"
 import "testing"
+import "math/rand"
 
 func TestInitiateBoard(t *testing.T) {
 	e := new(Engine)
@@ -47,6 +48,32 @@ func TestCanMove(t *testing.T) {
 		{4, 2, 4, 2},
 		{2, 0, 2, 4},
 		{4, 2, 4, 2},
+	}
+	if e.canMove() == false {
+		t.Errorf("There is a valid move in this board")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{2, 4, 2, 4},
+		{4, 2, 4, 2},
+		{8, 8, 2, 4},
+		{4, 2, 4, 2},
+	}
+	if e.canMove() == false {
+		t.Errorf("There is a valid move in this board")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{2, 4, 2, 4},
+		{4, 2, 4, 2},
+		{8, 4, 2, 4},
+		{8, 2, 4, 2},
 	}
 	if e.canMove() == false {
 		t.Errorf("There is a valid move in this board")

@@ -44,8 +44,15 @@ func (e *Engine) RunGame(p Player) {
 	for e.canMove() {
 		copiedBoard := e.copyBoard()
 		nextMove := e.player.Play(copiedBoard)
+		
+		if (nextMove == MoveUp || nextMove == MoveDown) && e.canMoveVertical() == false {
+			continue
+		}
+		if (nextMove == MoveRight || nextMove == MoveLeft) && e.canMoveHorizontal() == false {
+			continue
+		}
+		
 		moveFuncs[nextMove]()
-
 		e.putRandomlyOnBoard([]int{2, 4}[rand.Intn(1)])
 	}
 }
@@ -84,6 +91,25 @@ func (e *Engine) copyBoard() Board {
 }
 
 func (e *Engine) canMove() bool {
+	return e.canMoveHorizontal() || e.canMoveVertical()
+}
+
+func (e *Engine) canMoveHorizontal() bool {
+	for i := 0; i < len(e.board); i++ {
+		for j := 0; j < len(e.board[i]); j++ {
+			if e.board[i][j] == 0 {
+				return true
+			}
+
+			if j+1 < len(e.board[i]) && e.board[i][j] == e.board[i][j+1] {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (e *Engine) canMoveVertical() bool {
 	for i := 0; i < len(e.board); i++ {
 		for j := 0; j < len(e.board[i]); j++ {
 			if e.board[i][j] == 0 {
@@ -91,10 +117,6 @@ func (e *Engine) canMove() bool {
 			}
 
 			if i+1 < len(e.board) && e.board[i][j] == e.board[i+1][j] {
-				return true
-			}
-
-			if j+1 < len(e.board[i]) && e.board[i][j] == e.board[i][j+1] {
 				return true
 			}
 		}
@@ -129,7 +151,6 @@ func (e *Engine) doMoveUp() {
 				continue
 			}
 		}
-
 	}
 }
 
@@ -160,7 +181,6 @@ func (e *Engine) doMoveDown() {
 				continue
 			}
 		}
-
 	}
 }
 
@@ -191,7 +211,6 @@ func (e *Engine) doMoveRight() {
 				continue
 			}
 		}
-
 	}
 }
 
@@ -222,6 +241,5 @@ func (e *Engine) doMoveLeft() {
 				continue
 			}
 		}
-
 	}
 }
