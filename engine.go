@@ -135,8 +135,8 @@ func (e *Engine) doMoveUp() {
 
 func (e *Engine) doMoveDown() {
 	for j := 0; j < len(e.board[0]); j++ {
-		cur := len(e.board)-1
-		for i := len(e.board)-1; i >= 0; i-- {
+		cur := len(e.board) - 1
+		for i := len(e.board) - 1; i >= 0; i-- {
 			if e.board[i][j] == 0 || i == cur {
 				continue
 			}
@@ -166,8 +166,8 @@ func (e *Engine) doMoveDown() {
 
 func (e *Engine) doMoveRight() {
 	for i := 0; i < len(e.board); i++ {
-		cur := len(e.board[i])-1
-		for j := len(e.board[i])-1; j >= 0; j-- {
+		cur := len(e.board[i]) - 1
+		for j := len(e.board[i]) - 1; j >= 0; j-- {
 			if e.board[i][j] == 0 || j == cur {
 				continue
 			}

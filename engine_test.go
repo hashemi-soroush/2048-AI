@@ -188,7 +188,7 @@ func TestDoMoveRight(t *testing.T) {
 	///////////////////////////////////
 	// test sample
 	e.board = &Board{
-		{0, 0, 0, 0},		
+		{0, 0, 0, 0},
 		{2, 0, 0, 0},
 		{2, 2, 0, 0},
 		{2, 0, 2, 0},
@@ -214,9 +214,9 @@ func TestDoMoveRight(t *testing.T) {
 		{0, 2, 2, 2},
 	}
 	targetBoard = &Board{
-		{0, 0, 0, 2},	
-		{0, 0, 0, 4},	
-		{0, 0, 0, 4},	
+		{0, 0, 0, 2},
+		{0, 0, 0, 4},
+		{0, 0, 0, 4},
 		{0, 0, 2, 4},
 	}
 	e.doMoveRight()
@@ -252,7 +252,7 @@ func TestDoMoveLeft(t *testing.T) {
 	///////////////////////////////////
 	// test sample
 	e.board = &Board{
-		{0, 0, 0, 0},		
+		{0, 0, 0, 0},
 		{2, 0, 0, 0},
 		{2, 2, 0, 0},
 		{2, 0, 2, 0},
