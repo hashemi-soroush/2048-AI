@@ -104,28 +104,28 @@ func (e *Engine) canMove() bool {
 
 func (e *Engine) doMoveUp() {
 	for j := 0; j < len(e.board[0]); j++ {
-		top := 0
+		cur := 0
 		for i := 0; i < len(e.board); i++ {
-			if e.board[i][j] == 0 || i == top {
+			if e.board[i][j] == 0 || i == cur {
 				continue
 			}
 
-			if e.board[top][j] == 0 {
-				e.board[top][j] = e.board[i][j]
+			if e.board[cur][j] == 0 {
+				e.board[cur][j] = e.board[i][j]
 				e.board[i][j] = 0
 				continue
 			}
 
-			if e.board[i][j] == e.board[top][j] {
-				e.board[top][j] *= 2
+			if e.board[i][j] == e.board[cur][j] {
+				e.board[cur][j] *= 2
 				e.board[i][j] = 0
-				top += 1
+				cur += 1
 				continue
 			} else {
-				top += 1
+				cur += 1
 				temp := e.board[i][j]
 				e.board[i][j] = 0
-				e.board[top][j] = temp
+				e.board[cur][j] = temp
 				continue
 			}
 		}
@@ -134,13 +134,94 @@ func (e *Engine) doMoveUp() {
 }
 
 func (e *Engine) doMoveDown() {
+	for j := 0; j < len(e.board[0]); j++ {
+		cur := len(e.board)-1
+		for i := len(e.board)-1; i >= 0; i-- {
+			if e.board[i][j] == 0 || i == cur {
+				continue
+			}
 
-}
+			if e.board[cur][j] == 0 {
+				e.board[cur][j] = e.board[i][j]
+				e.board[i][j] = 0
+				continue
+			}
 
-func (e *Engine) doMoveLeft() {
+			if e.board[i][j] == e.board[cur][j] {
+				e.board[cur][j] *= 2
+				e.board[i][j] = 0
+				cur -= 1
+				continue
+			} else {
+				cur -= 1
+				temp := e.board[i][j]
+				e.board[i][j] = 0
+				e.board[cur][j] = temp
+				continue
+			}
+		}
 
+	}
 }
 
 func (e *Engine) doMoveRight() {
+	for i := 0; i < len(e.board); i++ {
+		cur := len(e.board[i])-1
+		for j := len(e.board[i])-1; j >= 0; j-- {
+			if e.board[i][j] == 0 || j == cur {
+				continue
+			}
 
+			if e.board[i][cur] == 0 {
+				e.board[i][cur] = e.board[i][j]
+				e.board[i][j] = 0
+				continue
+			}
+
+			if e.board[i][j] == e.board[i][cur] {
+				e.board[i][cur] *= 2
+				e.board[i][j] = 0
+				cur -= 1
+				continue
+			} else {
+				cur -= 1
+				temp := e.board[i][j]
+				e.board[i][j] = 0
+				e.board[i][cur] = temp
+				continue
+			}
+		}
+
+	}
+}
+
+func (e *Engine) doMoveLeft() {
+	for i := 0; i < len(e.board); i++ {
+		cur := 0
+		for j := 0; j < len(e.board[i]); j++ {
+			if e.board[i][j] == 0 || j == cur {
+				continue
+			}
+
+			if e.board[i][cur] == 0 {
+				e.board[i][cur] = e.board[i][j]
+				e.board[i][j] = 0
+				continue
+			}
+
+			if e.board[i][j] == e.board[i][cur] {
+				e.board[i][cur] *= 2
+				e.board[i][j] = 0
+				cur += 1
+				continue
+			} else {
+				cur += 1
+				temp := e.board[i][j]
+				e.board[i][j] = 0
+				e.board[i][cur] = temp
+				continue
+			}
+		}
+
+	}
 }

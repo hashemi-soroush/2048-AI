@@ -117,3 +117,195 @@ func TestDoMoveUp(t *testing.T) {
 	}
 	///////////////////////////////////
 }
+
+func TestDoMoveDown(t *testing.T) {
+	e := new(Engine)
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 2, 2, 2},
+		{0, 0, 2, 0},
+		{0, 0, 0, 2},
+		{0, 0, 0, 0},
+	}
+	targetBoard := &Board{
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 2, 4, 4},
+	}
+	e.doMoveDown()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveDown is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 2, 0, 0},
+		{0, 0, 2, 2},
+		{2, 0, 2, 2},
+		{0, 2, 0, 2},
+	}
+	targetBoard = &Board{
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 2},
+		{2, 4, 4, 4},
+	}
+	e.doMoveDown()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveDown is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{2, 0, 0, 4},
+		{2, 2, 4, 0},
+		{2, 2, 2, 2},
+		{2, 4, 2, 2},
+	}
+	targetBoard = &Board{
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{4, 4, 4, 4},
+		{4, 4, 4, 4},
+	}
+	e.doMoveDown()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveDown is making a mistake")
+	}
+	///////////////////////////////////
+}
+
+func TestDoMoveRight(t *testing.T) {
+	e := new(Engine)
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 0, 0, 0},		
+		{2, 0, 0, 0},
+		{2, 2, 0, 0},
+		{2, 0, 2, 0},
+	}
+	targetBoard := &Board{
+		{0, 0, 0, 0},
+		{0, 0, 0, 2},
+		{0, 0, 0, 4},
+		{0, 0, 0, 4},
+	}
+	e.doMoveRight()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveRight is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 0, 2, 0},
+		{2, 0, 0, 2},
+		{0, 2, 2, 0},
+		{0, 2, 2, 2},
+	}
+	targetBoard = &Board{
+		{0, 0, 0, 2},	
+		{0, 0, 0, 4},	
+		{0, 0, 0, 4},	
+		{0, 0, 2, 4},
+	}
+	e.doMoveRight()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveRight is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{2, 2, 2, 2},
+		{0, 2, 2, 4},
+		{0, 4, 2, 2},
+		{4, 0, 2, 2},
+	}
+	targetBoard = &Board{
+		{0, 0, 4, 4},
+		{0, 0, 4, 4},
+		{0, 0, 4, 4},
+		{0, 0, 4, 4},
+	}
+	e.doMoveRight()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveRight is making a mistake")
+	}
+	///////////////////////////////////
+}
+
+func TestDoMoveLeft(t *testing.T) {
+	e := new(Engine)
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 0, 0, 0},		
+		{2, 0, 0, 0},
+		{2, 2, 0, 0},
+		{2, 0, 2, 0},
+	}
+	targetBoard := &Board{
+		{0, 0, 0, 0},
+		{2, 0, 0, 0},
+		{4, 0, 0, 0},
+		{4, 0, 0, 0},
+	}
+	e.doMoveLeft()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveLeft is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{0, 0, 2, 0},
+		{2, 0, 0, 2},
+		{0, 2, 2, 0},
+		{0, 2, 2, 2},
+	}
+	targetBoard = &Board{
+		{2, 0, 0, 0},
+		{4, 0, 0, 0},
+		{4, 0, 0, 0},
+		{4, 2, 0, 0},
+	}
+	e.doMoveLeft()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveLeft is making a mistake")
+	}
+	///////////////////////////////////
+
+	///////////////////////////////////
+	// test sample
+	e.board = &Board{
+		{2, 2, 2, 2},
+		{0, 2, 2, 4},
+		{0, 4, 2, 2},
+		{4, 0, 2, 2},
+	}
+	targetBoard = &Board{
+		{4, 4, 0, 0},
+		{4, 4, 0, 0},
+		{4, 4, 0, 0},
+		{4, 4, 0, 0},
+	}
+	e.doMoveLeft()
+	if reflect.DeepEqual(e.board, targetBoard) == false {
+		t.Errorf("doMoveLeft is making a mistake")
+	}
+	///////////////////////////////////
+}
