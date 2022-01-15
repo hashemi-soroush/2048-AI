@@ -61,8 +61,8 @@ func TestCanMove(t *testing.T) {
 
 func TestDoMoveUp(t *testing.T) {
 	startBoard := *new(Board)
-	endBoard := *new(Board);
-	targetBoard := *new(Board);
+	endBoard := *new(Board)
+	targetBoard := *new(Board)
 
 	///////////////////////////////////
 	// test sample

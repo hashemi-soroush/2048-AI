@@ -39,7 +39,7 @@ func GenerateSmartAI() Player {
 	return &SmartAI{}
 }
 
-func test(count int, playerGenerator func()Player) []int {
+func test(count int, playerGenerator func() Player) []int {
 	scores := *new([]int)
 	for round := 0; round < count; round++ {
 
@@ -61,7 +61,7 @@ func GiveMeanAndVar(nums []int) (float64, float64) {
 		mean += float64(num)
 	}
 	mean /= float64(len(nums))
-	
+
 	variance := 0.0
 	for _, num := range nums {
 		variance += math.Pow((float64(num) - mean), 2)

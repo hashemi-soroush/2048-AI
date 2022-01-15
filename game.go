@@ -9,7 +9,7 @@ type Player interface {
 type Game struct {
 	board  Board
 	player Player
-	score int
+	score  int
 }
 
 func (g *Game) InitiateBoard() {
@@ -22,23 +22,23 @@ func (g *Game) InitiateBoard() {
 func (g *Game) RunGame(p Player) int {
 	g.player = p
 
-	doMoveFuncs := map[Move]func(Board)(Board, int){
+	doMoveFuncs := map[Move]func(Board) (Board, int){
 		MoveUp:    doMoveUp,
 		MoveDown:  doMoveDown,
 		MoveLeft:  doMoveLeft,
 		MoveRight: doMoveRight,
 	}
-	canMoveFuncs := map[Move]func(Board)bool{
-		MoveUp: canMoveUp,
-		MoveDown: canMoveDown,
+	canMoveFuncs := map[Move]func(Board) bool{
+		MoveUp:    canMoveUp,
+		MoveDown:  canMoveDown,
 		MoveRight: canMoveRight,
-		MoveLeft: canMoveLeft,
+		MoveLeft:  canMoveLeft,
 	}
 
 	for canMove(g.board) {
 		copiedBoard := copyBoard(g.board)
 		nextMove := g.player.Play(copiedBoard)
-		
+
 		if canMoveFuncs[nextMove](g.board) == false {
 			continue
 		}

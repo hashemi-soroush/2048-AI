@@ -26,6 +26,7 @@ func TestInitiateBoard(t *testing.T) {
 }
 
 type dummyPlayer struct{}
+
 func (d *dummyPlayer) Play(board Board) Move {
 	move := Move(rand.Intn(4))
 	return move
@@ -33,7 +34,7 @@ func (d *dummyPlayer) Play(board Board) Move {
 
 func TestRunGame(t *testing.T) {
 
-	for i:=0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		g := new(Game)
 		g.InitiateBoard()
 		fmt.Println(g.board)
