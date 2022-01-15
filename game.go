@@ -1,7 +1,6 @@
 package main
 
 import "math/rand"
-import "time"
 
 type Player interface {
 	Play(Board) Move
@@ -16,13 +15,11 @@ type Game struct {
 func (g *Game) InitiateBoard() {
 	g.board = *new(Board)
 
-	rand.Seed(time.Now().UnixNano())
-
 	g.putRandomlyOnBoard(2)
 	g.putRandomlyOnBoard(2)
 }
 
-func (g *Game) RunGame(p Player) {
+func (g *Game) RunGame(p Player) int {
 	g.player = p
 
 	doMoveFuncs := map[Move]func(Board)(Board, int){
@@ -52,6 +49,8 @@ func (g *Game) RunGame(p Player) {
 		g.score += score
 		g.putRandomlyOnBoard([]int{2, 4}[rand.Intn(1)])
 	}
+
+	return g.score
 }
 
 func (g *Game) putRandomlyOnBoard(number int) {
