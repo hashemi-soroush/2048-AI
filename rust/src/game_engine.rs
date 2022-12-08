@@ -31,3 +31,14 @@ impl std::string::ToString for GameEngine {
         return res;
     }
 }
+
+impl std::string::ToString for MoveDirection {
+    fn to_string(&self) -> String {
+        match self {
+            MoveDirection::Up => String::from("Up"),
+            MoveDirection::Down => String::from("Down"),
+            MoveDirection::Right => String::from("Right"),
+            MoveDirection::Left => String::from("Left"),
+        }
+    }
+}

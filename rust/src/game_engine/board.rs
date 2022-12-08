@@ -26,7 +26,7 @@ impl Board {
         return board;
     }
 
-    pub fn move_(&mut self, direction: MoveDirection) -> u32 {
+    pub fn move_(&mut self, direction: &MoveDirection) -> u32 {
         match direction {
             MoveDirection::Up => self.move_up(),
             MoveDirection::Down => self.move_down(),
@@ -37,9 +37,9 @@ impl Board {
 
     fn move_up(&mut self) -> u32 {
         let mut score: u32 = 0;
-        for j in 0..4 {
+        for j in 0..self.0.len() {
             let mut cur = 0;
-            for i in 0..4 {
+            for i in 0..self.0.len() {
                 if i == cur || self.0[i][j] == 0 {
                     continue;
                 }
@@ -66,9 +66,9 @@ impl Board {
 
     fn move_down(&mut self) -> u32 {
         let mut score: u32 = 0;
-        for j in 0..4 {
-            let mut cur = 3;
-            for i in 3..=0 {
+        for j in 0..self.0[0].len() {
+            let mut cur = self.0.len()-1;
+            for i in (0..self.0.len()).rev() {
                 if cur == i || self.0[i][j] == 0 {
                     continue;
                 }
@@ -94,9 +94,9 @@ impl Board {
 
     fn move_left(&mut self) -> u32 {
         let mut score: u32 = 0;
-        for i in 0..4 {
+        for i in 0..self.0.len() {
             let mut cur = 0;
-            for j in 0..4 {
+            for j in 0..self.0[i].len() {
                 if self.0[i][j] == 0 || cur == j {
                     continue;
                 }
@@ -122,9 +122,9 @@ impl Board {
     
     fn move_right(&mut self) -> u32 {
         let mut score = 0;
-        for i in 0..4 {
-            let mut cur = 3;
-            for j in 3..=0 {
+        for i in 0..self.0.len() {
+            let mut cur = self.0[0].len() - 1;
+            for j in (0..self.0[0].len()).rev() {
                 if self.0[i][j] == 0 || cur == j {
                     continue;
                 }
@@ -162,5 +162,99 @@ impl std::string::ToString for Board {
         }
         res.push_str("}");
         return res;
+    }
+}
+
+impl std::cmp::PartialEq for Board {
+    fn eq(&self, other: &Self) -> bool {
+        if self.0.len() != other.0.len() { return false; }
+        for i in 0..self.0.len() {
+            if self.0[i].len() != other.0[i].len() { return false; }
+
+            for j in 0..self.0[i].len() {
+                if self.0[i][j] != other.0[i][j] { return false; }
+            }
+        }
+        return true;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn board_moves() {
+        struct MoveSample {
+            start: super::Board,
+            end: super::Board,
+            direction: super::MoveDirection
+        }
+
+        let mut samples = [
+            MoveSample{
+                start:  super::Board{0: [[0, 2, 2, 2], [0, 0, 2, 0], [0, 0, 0, 2], [0, 0, 0, 0]]},
+                end:    super::Board{0: [[0, 2, 4, 4], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]},
+                direction: super::MoveDirection::Up,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 2, 0, 0], [0, 0, 2, 2], [2, 0, 2, 2], [0, 2, 0, 0]]},
+                end:    super::Board{0: [[2, 4, 4, 4], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]},
+                direction: super::MoveDirection::Up,
+            },
+            MoveSample{
+                start:  super::Board{0: [[2, 0, 0, 4], [2, 2, 4, 0], [2, 2, 2, 2], [2, 4, 2, 2]]},
+                end:    super::Board{0: [[4, 4, 4, 4], [4, 4, 4, 4], [0, 0, 0, 0], [0, 0, 0, 0]]},
+                direction: super::MoveDirection::Up,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 2, 2, 2], [0, 0, 2, 0], [0, 0, 0, 2], [0, 0, 0, 0]]},
+                end:    super::Board{0: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 2, 4, 4]]},
+                direction: super::MoveDirection::Down,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 2, 0, 0], [0, 0, 2, 2], [2, 0, 2, 2], [0, 2, 0, 2]]},
+                end:    super::Board{0: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 2], [2, 4, 4, 4]]},
+                direction: super::MoveDirection::Down,
+            },
+            MoveSample{
+                start:  super::Board{0: [[2, 0, 0, 4], [2, 2, 4, 0], [2, 2, 2, 2], [2, 4, 2, 2]]},
+                end:    super::Board{0: [[0, 0, 0, 0], [0, 0, 0, 0], [4, 4, 4, 4], [4, 4, 4, 4]]},
+                direction: super::MoveDirection::Down,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 0, 0, 0], [2, 0, 0, 0], [2, 2, 0, 0], [2, 0, 2, 0]]},
+                end:    super::Board{0: [[0, 0, 0, 0], [0, 0, 0, 2], [0, 0, 0, 4], [0, 0, 0, 4]]},
+                direction: super::MoveDirection::Right,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 0, 2, 0], [2, 0, 0, 2], [0, 2, 2, 0], [0, 2, 2, 2]]},
+                end:    super::Board{0: [[0, 0, 0, 2], [0, 0, 0, 4], [0, 0, 0, 4], [0, 0, 2, 4]]},
+                direction: super::MoveDirection::Right,
+            },
+            MoveSample{
+                start:  super::Board{0: [[2, 2, 2, 2], [0, 2, 2, 4], [0, 4, 2, 2], [4, 0, 2, 2]]},
+                end:    super::Board{0: [[0, 0, 4, 4], [0, 0, 4, 4], [0, 0, 4, 4], [0, 0, 4, 4]]},
+                direction: super::MoveDirection::Right,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 0, 0, 0], [2, 0, 0, 0], [2, 2, 0, 0], [2, 0, 2, 0]]},
+                end:    super::Board{0: [[0, 0, 0, 0], [2, 0, 0, 0], [4, 0, 0, 0], [4, 0, 0, 0]]},
+                direction: super::MoveDirection::Left,
+            },
+            MoveSample{
+                start:  super::Board{0: [[0, 0, 2, 0], [2, 0, 0, 2], [0, 2, 2, 0], [0, 2, 2, 2]]},
+                end:    super::Board{0: [[2, 0, 0, 0], [4, 0, 0, 0], [4, 0, 0, 0], [4, 2, 0, 0]]},
+                direction: super::MoveDirection::Left,
+            },
+            MoveSample{
+                start:  super::Board{0: [[2, 2, 2, 2], [0, 2, 2, 4], [0, 4, 2, 2], [4, 0, 2, 2]]},
+                end:    super::Board{0: [[4, 4, 0, 0], [4, 4, 0, 0], [4, 4, 0, 0], [4, 4, 0, 0]]},
+                direction: super::MoveDirection::Left,
+            }
+        ];
+
+        for sample in (&mut samples).into_iter() {
+            sample.start.move_(&sample.direction);
+            assert_eq!(sample.start, sample.end, "{}", sample.direction.to_string());
+        }
     }
 }
