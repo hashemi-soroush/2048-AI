@@ -1,3 +1,4 @@
+use super::MoveDirection;
 use rand::Rng;
 
 
@@ -23,6 +24,128 @@ impl Board {
         }
 
         return board;
+    }
+
+    pub fn move_(&mut self, direction: MoveDirection) -> u32 {
+        match direction {
+            MoveDirection::Up => self.move_up(),
+            MoveDirection::Down => self.move_down(),
+            MoveDirection::Left => self.move_left(),
+            MoveDirection::Right => self.move_right(),
+        }
+    }
+
+    fn move_up(&mut self) -> u32 {
+        let mut score: u32 = 0;
+        for j in 0..4 {
+            let mut cur = 0;
+            for i in 0..4 {
+                if i == cur || self.0[i][j] == 0 {
+                    continue;
+                }
+
+                if self.0[cur][j] == 0 {
+                    self.0[cur][j] = self.0[i][j];
+                    self.0[i][j] = 0;
+                } else if self.0[cur][j] == self.0[i][j] {
+                    self.0[cur][j] *= 2;
+                    self.0[i][j] = 0;
+                    score += self.0[cur][j];
+                    cur += 1;
+
+                } else {
+                    cur += 1;
+                    let temp = self.0[i][j];
+                    self.0[i][j] = 0;
+                    self.0[cur][j] = temp;
+                }
+            }
+        }
+        return score;
+    }
+
+    fn move_down(&mut self) -> u32 {
+        let mut score: u32 = 0;
+        for j in 0..4 {
+            let mut cur = 3;
+            for i in 3..=0 {
+                if cur == i || self.0[i][j] == 0 {
+                    continue;
+                }
+
+                if self.0[cur][j] == 0 {
+                    self.0[cur][j] = self.0[i][j];
+                    self.0[i][j] = 0;
+                } else if self.0[i][j] == self.0[cur][j] {
+                    self.0[cur][j] *= 2;
+                    self.0[i][j] = 0;
+                    score += self.0[cur][j];
+                    cur -= 1;
+                } else {
+                    cur -= 1;
+                    let temp = self.0[i][j];
+                    self.0[i][j] = 0;
+                    self.0[cur][j] = temp;
+                }
+            }
+        }
+        return score;
+    }
+
+    fn move_left(&mut self) -> u32 {
+        let mut score: u32 = 0;
+        for i in 0..4 {
+            let mut cur = 0;
+            for j in 0..4 {
+                if self.0[i][j] == 0 || cur == j {
+                    continue;
+                }
+
+                if self.0[i][cur] == 0 {
+                    self.0[i][cur] = self.0[i][j];
+                    self.0[i][j] = 0;
+                } else if self.0[i][j] == self.0[i][cur] {
+                    self.0[i][cur] *= 2;
+                    self.0[i][j] = 0;
+                    score += self.0[i][cur];
+                    cur += 1;
+                } else {
+                    cur += 1;
+                    let temp = self.0[i][j];
+                    self.0[i][j] = 0;
+                    self.0[i][cur] = temp;
+                }
+            }
+        }
+        return score;
+    }
+    
+    fn move_right(&mut self) -> u32 {
+        let mut score = 0;
+        for i in 0..4 {
+            let mut cur = 3;
+            for j in 3..=0 {
+                if self.0[i][j] == 0 || cur == j {
+                    continue;
+                }
+
+                if self.0[i][cur] == 0 {
+                    self.0[i][cur] = self.0[i][j];
+                    self.0[i][j] = 0;
+                } else if self.0[i][j] == self.0[i][cur] {
+                    self.0[i][cur] *= 2;
+                    self.0[i][j] = 0;
+                    score += self.0[i][cur];
+                    cur -= 1;
+                } else {
+                    cur -= 1;
+                    let temp = self.0[i][j];
+                    self.0[i][j] = 0;
+                    self.0[i][cur] = temp;
+                }
+            }
+        }
+        return score;
     }
 }
 

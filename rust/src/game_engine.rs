@@ -2,8 +2,10 @@ pub mod board;
 
 #[derive(Debug)]
 pub struct GameEngine {
-    board: board::Board,
+    pub board: board::Board,
 }
+
+pub enum MoveDirection { Up, Down, Left, Right }
 
 impl GameEngine {
     pub fn new() -> GameEngine {
