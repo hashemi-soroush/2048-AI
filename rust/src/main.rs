@@ -1,3 +1,7 @@
+mod game_engine;
+
+
 fn main() {
-    println!("Hello, world!");
+    let engine = game_engine::GameEngine::new();
+    println!("{}", engine.to_string())
 }
