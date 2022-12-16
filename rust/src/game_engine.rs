@@ -1,6 +1,5 @@
 pub mod board;
 
-#[derive(Debug)]
 pub struct GameEngine {
     pub board: board::Board,
 }
@@ -9,10 +8,9 @@ pub enum MoveDirection { Up, Down, Left, Right }
 
 impl GameEngine {
     pub fn new() -> GameEngine {
-        let game_engine = GameEngine {
+        GameEngine {
             board: board::Board::new(),
-        };
-        return game_engine
+        }
     }
 }
 
@@ -22,9 +20,7 @@ impl std::string::ToString for GameEngine {
 
         let board_string = self.board.to_string();
         for line in board_string.lines() {
-            res.push_str("\t");
-            res.push_str(line);
-            res.push_str("\n");
+            res.push_str(&format!("\t{line}\n", line=line));
         }
 
         res.push_str("}");
