@@ -1,19 +1,10 @@
 mod game_engine;
+mod player;
 
 
 fn main() {
-    let mut engine = game_engine::GameEngine::new();
+    let player = player::random::RandomPlayer{};
+    let mut engine = game_engine::GameEngine::<player::random::RandomPlayer>::new(4, player);
     println!("{}", engine.to_string());
-    
-    engine.board.move_(&game_engine::MoveDirection::Right);
-    println!("{}", engine.to_string());
-
-    engine.board.move_(&game_engine::MoveDirection::Up);
-    println!("{}", engine.to_string());
-
-    engine.board.move_(&game_engine::MoveDirection::Down);
-    println!("{}", engine.to_string());
-
-    engine.board.move_(&game_engine::MoveDirection::Left);
-    println!("{}", engine.to_string());
+    println!("{}", engine.play());
 }

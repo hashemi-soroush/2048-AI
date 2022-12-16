@@ -1,30 +1,45 @@
 pub mod board;
 
-pub struct GameEngine {
-    pub board: board::Board,
+use crate::player::Player;
+
+pub struct GameEngine<P: Player> {
+    board: board::Board,
+    player: P,
+    score: u32,
 }
 
 pub enum MoveDirection { Up, Down, Left, Right }
 
-impl GameEngine {
-    pub fn new() -> GameEngine {
+impl<P: Player> GameEngine<P> {
+    pub fn new(size: u32, player: P) -> GameEngine<P> {
         GameEngine {
-            board: board::Board::new(),
+            board: board::Board::new(size),
+            player: player,
+            score: 0,
         }
+    }
+
+    pub fn play(&mut self) -> u32 {
+        while self.board.can_move() {
+            let player_move = self.player.play(&self.board);
+            self.score += self.board.move_(&player_move);
+            self.board.put_randomly(1, &[2, 4]);
+        }
+        return self.score;
     }
 }
 
-impl std::string::ToString for GameEngine {
+impl<P: Player> std::string::ToString for GameEngine<P> {
     fn to_string(&self) -> String {
-        let mut res = String::from("Game Engine {\n");
-
-        let board_string = self.board.to_string();
-        for line in board_string.lines() {
-            res.push_str(&format!("\t{line}\n", line=line));
+        let mut board_str = self.board.to_string()
+            .lines()
+            .map(|line| format!("\t{}\n", line))
+            .reduce(|cur, line| cur + &line);
+        
+        match board_str {
+            Some(board_str) => "Game Engine {\n".to_string() + &board_str + "}",
+            None => panic!("panic"),
         }
-
-        res.push_str("}");
-        return res;
     }
 }
 
