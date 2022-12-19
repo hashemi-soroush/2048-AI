@@ -192,20 +192,6 @@ impl std::string::ToString for Board {
     }
 }
 
-// impl std::cmp::PartialEq for Board {
-//     fn eq(&self, other: &Self) -> bool {
-//         if self.b.len() != other.b.len() { return false; }
-//         for i in 0..self.b.len() {
-//             if self.b[i].len() != other.b[i].len() { return false; }
-
-//             for j in 0..self.b[i].len() {
-//                 if self.b[i][j] != other.b[i][j] { return false; }
-//             }
-//         }
-//         return true;
-//     }
-// }
-
 #[cfg(test)]
 mod tests {
     #[test]
